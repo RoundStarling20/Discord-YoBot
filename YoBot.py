@@ -11,13 +11,13 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
-    print(f"{member} has joined a server.")
+    print(f"{member} has joined [{member.guild.name}: {member.guild.id}].")
     await member.guild.system_channel.send(file=discord.File('bababoey.gif'))
     await member.guild.system_channel.send(f'Welcome! <@{member.id}>')
 
 @client.event
 async def on_member_remove(member):
-    print(f"{member} has left a server.")
+    print(f"{member} has left [{member.guild.name}: {member.guild.id}].")
 
 @client.event
 async def on_command_error(ctx, error):
