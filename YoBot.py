@@ -3,7 +3,6 @@ import random
 from discord.ext import commands
 from discord.flags import Intents
 
-
 client = commands.Bot(command_prefix = '.', intents=Intents.all())
 
 @client.event
@@ -22,7 +21,7 @@ async def on_member_remove(member):
 
 @client.event
 async def on_command_error(ctx, error):
-    if isinstance(error, commands.CommandNotFound):
+    if isinstance(error, discord.ext.commands.CommandNotFound):
         await ctx.send("Thats not a command doo doo fart!")
 
 @client.command()
