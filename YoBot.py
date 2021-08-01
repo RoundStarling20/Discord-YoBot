@@ -1,14 +1,22 @@
 from asyncio.windows_events import NULL
 import discord
 import random
+import os
 from discord.ext import commands
 from discord.flags import Intents
+
+def isItme(ctx):
+    return ctx.message.author.id == 220327217312432129
 
 client = commands.Bot(command_prefix = '.', intents=Intents.all())
 
 @client.event
+async def on_connect():
+    print("Bot has connected to Discord!")
+
+@client.event
 async def on_ready():
-    print("Bot is ready.")
+    print("Bot is ready!")
 
 @client.event
 async def on_member_join(member):
@@ -23,14 +31,10 @@ async def on_member_remove(member):
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, discord.ext.commands.CommandNotFound):
-        if ctx.message.author.id == 220327217312432129:
+        if isItme(ctx):
             await ctx.send("Thats not a command my king!")
         else:
             await ctx.send("Thats not a command doo doo fart!")
-
-@client.command()
-async def ping(ctx):
-    await ctx.send(f'Pong! {round(client.latency * 1000)}ms')
 
 @client.command()
 async def dabMeUp(ctx):
@@ -87,8 +91,13 @@ async def av(ctx, member: discord.Member = None):
         member = ctx.author
     await ctx.send(member.avatar_url)
 
-fp = open("token.txt", 'r')
-client.run(f"{fp.read()}")
-fp.close()
+
+for filename in os.listdir("./cogs"):
+    if filename.endswith(".py"):
+        client.load_extension(f'cogs.{filename[:-3]}')
+
+
+with open("token.txt", 'r', encoding="utf-8") as fp:
+    client.run(f"{fp.read()}")
 
 #rotate images
