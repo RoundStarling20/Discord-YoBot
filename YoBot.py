@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 import discord
 import random
 from discord.ext import commands
@@ -77,6 +78,14 @@ async def commands(ctx):
     rsBotCommands = "```.ping: returns the latency in ms\n.clear <n>: purges n messages```"
     await ctx.send(content = rsBotCommands)
 
+@client.command()
+async def av(ctx, member: discord.Member = None):
+    if member is None:
+        member = ctx.author
+    await ctx.send(member.avatar_url)
+
 fp = open("token.txt", 'r')
 client.run(f"{fp.read()}")
 fp.close()
+
+#rotate images
