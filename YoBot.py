@@ -23,7 +23,10 @@ async def on_member_remove(member):
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, discord.ext.commands.CommandNotFound):
-        await ctx.send("Thats not a command doo doo fart!")
+        if ctx.message.author.id == 220327217312432129:
+            await ctx.send("Thats not a command my king!")
+        else:
+            await ctx.send("Thats not a command doo doo fart!")
 
 @client.command()
 async def ping(ctx):
