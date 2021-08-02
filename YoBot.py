@@ -64,6 +64,10 @@ async def hammie(ctx):
     await ctx.send(file=discord.File('stinky.gif'))
 
 @client.command()
+async def stewart(ctx):
+    await ctx.send("That aint my name cuh")
+
+@client.command()
 async def commands(ctx):
     rsBotCommands = "```.ping: returns the latency in ms\n.clear <n>: purges n messages```"
     await ctx.send(content = rsBotCommands)

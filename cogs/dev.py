@@ -30,7 +30,10 @@ class dev(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        print(f"{message.author} said {message.content}")
+        if message.author.id == 870467770846945290:
+            print("Yo? responded")
+        else:
+            print(f"{message.author} said {message.content}")
 
     @commands.command()
     @commands.check(isItme)
