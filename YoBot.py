@@ -1,12 +1,11 @@
 from asyncio.windows_events import NULL
 import discord
-import random
-import os
 from discord.ext import commands
 from discord.flags import Intents
+import random
+import os
+import custom
 
-def isItme(ctx):
-    return ctx.message.author.id == 220327217312432129
 
 client = commands.Bot(command_prefix = '.', intents=Intents.all())
 
@@ -18,7 +17,7 @@ async def on_member_join(member):
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, discord.ext.commands.CommandNotFound):
-        if isItme(ctx):
+        if custom.isItme(ctx):
             await ctx.send("Thats not a command my king!")
         else:
             await ctx.send("Thats not a command doo doo fart!")
