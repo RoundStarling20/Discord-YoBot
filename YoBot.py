@@ -11,22 +11,9 @@ def isItme(ctx):
 client = commands.Bot(command_prefix = '.', intents=Intents.all())
 
 @client.event
-async def on_connect():
-    print("Bot has connected to Discord!")
-
-@client.event
-async def on_ready():
-    print("Bot is ready!")
-
-@client.event
 async def on_member_join(member):
-    print(f"{member} has joined [{member.guild.name}: {member.guild.id}].")
     await member.guild.system_channel.send(file=discord.File('bababoey.gif'))
-    await member.guild.system_channel.send(f'Welcome! <@{member.id}>')
-
-@client.event
-async def on_member_remove(member):
-    print(f"{member} has left [{member.guild.name}: {member.guild.id}].")
+    await member.guild.system_channel.send(f'Welcome <@{member.id}>!')
 
 @client.event
 async def on_command_error(ctx, error):
@@ -68,17 +55,13 @@ async def desp(ctx):
 @client.command()
 async def rs(ctx):
     message = random.choice(["RoundStarling20 is so cool", "RoundStarling20 is so smart", "RoundStarling20 is the best programmer ever", "RoundStarling20 is so bad <:SHEESH:870453487899652106>", "RoundStarling20 is cute fr fr <:blushflush:833362636640878673>"])
-    webhook = await ctx.channel.create_webhook(name = "RSHook" , reason = "For RS's bot")
+    webhook = await ctx.channel.create_webhook(name="RSHook" , reason="For RS's bot")
     await webhook.send(content = message, username = ctx.author.display_name, avatar_url = ctx.author.avatar_url)
     await webhook.delete()
 
 @client.command()
 async def hammie(ctx):
     await ctx.send(file=discord.File('stinky.gif'))
-
-@client.command()
-async def clear(ctx, amount = 5):
-    await ctx.channel.purge(limit = amount + 1)
 
 @client.command()
 async def commands(ctx):
