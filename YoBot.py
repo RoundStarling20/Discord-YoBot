@@ -1,68 +1,89 @@
+from asyncio.windows_events import NULL
 import discord
 from discord.ext import commands
+from discord.flags import Intents
+import random
+import os
 import custom
 
 
-class TestCog(commands.Cog):
-    def __init__(self, client):
-        self.client = client
+client = commands.Bot(command_prefix = '.', intents=Intents.all())
 
-    @commands.command()
-    @commands.check(custom.isItme)
-    async def kick(self, ctx, member: discord.Member = None, *, reason = None):
-        if member != None:
-            await member.kick(reason = reason)
-            await ctx.send(f'Kicked {member.name}#{member.discriminator}')
+@client.event
+async def on_member_join(member):
+    await member.guild.system_channel.send(file=discord.File('bababoey.gif'))
+    await member.guild.system_channel.send(f'Welcome <@{member.id}>!')
 
-    @commands.command()
-    @commands.check(custom.isItme)
-    async def ban(self, ctx, member: discord.Member = None, *, reason = None):
-        if member != None:
-            await member.ban(reason = reason)
-            await ctx.send(f'Banned {member.name}#{member.discriminator}')
+@client.event
+async def on_command_error(ctx, error):
+    if isinstance(error, discord.ext.commands.CommandNotFound):
+        if custom.isItme(ctx):
+            await ctx.send("Thats not a command my king!")
+        else:
+            await ctx.send("Thats not a command doo doo fart!")
 
-    #@commands.command()
-    #@commands.check(custom.isItme)
-    #async def unban(self, ctx, *, member): 
-    #    bannedUsers = await ctx.guild.bans()
-    #    member_name, member_discriminator = member.split('#')
-    #    for ban_entry in bannedUsers:
-    #        user = ban_entry.user
-    #        if (user.name, user.discriminator) == (member_name, member_discriminator):
-    #            await ctx.guild.unban(user)
-    #            await ctx.send(f'Unbanned {user.name}#{user.discriminator}')
-    #            return
-    #        elif str(user.id) == member:
-    #            await ctx.guild.unban(user)
-    #            await ctx.send(f'Unbanned {user.name}#{user.discriminator}')
-    #            return
-                
-    @commands.command()
-    @commands.check(custom.isItme)
-    async def forbid(self, ctx, *, message):
-        db = custom.get_db()
-        if ':' in message:
-            if message not in db["bannedEmojis"]:
-                db["bannedEmojis"].append(message)
-                custom.save_db(db)
-                await ctx.send(f'{message} has been forbidden')
-        elif message not in db["bannedWords"]:
-            print("entered word")
-            db["bannedWords"].append(message)
-            custom.save_db(db)
-            await ctx.send(f'{message} has been forbidden')
+@client.command()
+async def dabMeUp(ctx):
+    await ctx.send(file=discord.File('Dab_me_up.png'))
+
+@client.command()
+async def aight(ctx):
+    await ctx.send(file=discord.File('ight.jpg'))
+    await ctx.send(file=discord.File('Dab.png'))
+
+@client.command()
+async def tu(ctx):
+    await ctx.send('<:tumadre:833742332334702592>')
+
+@client.command()
+async def creepy(ctx):
+    await ctx.send('<:yeahboi:828988729095094352>')
+
+@client.command()
+async def guhnaw(ctx):
+    await ctx.send('<:blushflush:833362636640878673>')
+
+@client.command()
+async def acco(ctx):
+    await ctx.send('<:blobcomf:864661919901679616>')
+
+@client.command()
+async def desp(ctx):
+    await ctx.send(file=discord.File('desp.png'))
+
+@client.command()
+async def rs(ctx):
+    message = random.choice(["RoundStarling20 is so cool", "RoundStarling20 is so smart", "RoundStarling20 is the best programmer ever", "RoundStarling20 is so bad <:SHEESH:870453487899652106>", "RoundStarling20 is cute fr fr <:blushflush:833362636640878673>"])
+    webhook = await ctx.channel.create_webhook(name="RSHook" , reason="For RS's bot")
+    await webhook.send(content = message, username = ctx.author.display_name, avatar_url = ctx.author.avatar_url)
+    await webhook.delete()
+
+@client.command()
+async def hammie(ctx):
+    await ctx.send(file=discord.File('stinky.gif'))
+
+@client.command()
+async def stewart(ctx):
+    await ctx.send("That aint my name cuh")
+
+@client.command()
+async def commands(ctx):
+    rsBotCommands = "```.ping: returns the latency in ms\n.clear <n>: purges n messages```"
+    await ctx.send(content = rsBotCommands)
+
+@client.command()
+async def av(ctx, member: discord.Member = None):
+    if member is None:
+        member = ctx.author
+    await ctx.send(member.avatar_url)
 
 
-    #@commands.Cog.listener()
-    #async def on_message(self, message):
-    #    if '<:uwugasm:850120112148316203>' in message.content:
-    #        await message.add_reaction('<a:no:820524004594024459>')
+for filename in os.listdir("./cogs"):
+    if filename.endswith(".py"):
+        client.load_extension(f'cogs.{filename[:-3]}')
 
-    @commands.command()
-    async def clear(self, ctx, amount = 5):
-        await ctx.channel.purge(limit = amount + 1)
-        
-#ban and kick event
 
-def setup(client):
-    client.add_cog(TestCog(client))
+with open("token.txt", 'r', encoding="utf-8") as fp:
+    client.run(f"{fp.read()}")
+
+#rotate images
