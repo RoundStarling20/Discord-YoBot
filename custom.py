@@ -7,9 +7,11 @@ def isItme(ctx):
     return ctx.message.author.id == 220327217312432129
 
 def get_db():
-    with open("database\database.json") as file:
+    with open("cogs\database.json", "r") as file:
+        print('opened')
         return json.load(file)
 
 def save_db(db):
-    with open("database\database.json", "w") as file:
+    print("you have saved the database")
+    with open("cogs\database.json", "w") as file:
         json.dump(db, file)
