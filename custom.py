@@ -12,6 +12,5 @@ def get_db():
         return json.load(file)
 
 def save_db(db):
-    print("you have saved the database")
     with open("cogs\database.json", "w") as file:
         json.dump(db, file)
