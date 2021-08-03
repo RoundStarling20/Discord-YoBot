@@ -21,21 +21,36 @@ class TestCog(commands.Cog):
             await member.ban(reason = reason)
             await ctx.send(f'Banned {member.name}#{member.discriminator}')
 
+    #@commands.command()
+    #@commands.check(custom.isItme)
+    #async def unban(self, ctx, *, member): 
+    #    bannedUsers = await ctx.guild.bans()
+    #    member_name, member_discriminator = member.split('#')
+    #    for ban_entry in bannedUsers:
+    #        user = ban_entry.user
+    #        if (user.name, user.discriminator) == (member_name, member_discriminator):
+    #            await ctx.guild.unban(user)
+    #            await ctx.send(f'Unbanned {user.name}#{user.discriminator}')
+    #            return
+    #        elif str(user.id) == member:
+    #            await ctx.guild.unban(user)
+    #            await ctx.send(f'Unbanned {user.name}#{user.discriminator}')
+    #            return
+                
     @commands.command()
     @commands.check(custom.isItme)
-    async def unban(self, ctx, *, member): 
-        bannedUsers = await ctx.guild.bans()
-        member_name, member_discriminator = member.split('#')
-        for ban_entry in bannedUsers:
-            user = ban_entry.user
-            if (user.name, user.discriminator) == (member_name, member_discriminator):
-                await ctx.guild.unban(user)
-                await ctx.send(f'Unbanned {user.name}#{user.discriminator}')
-                return
-            elif str(user.id) == member:
-                await ctx.guild.unban(user)
-                await ctx.send(f'Unbanned {user.name}#{user.discriminator}')
-                return
+    async def forbid(self, ctx, *, message):
+        db = custom.get_db()
+        if ':' in message:
+            if message not in db["bannedEmojis"]:
+                db["bannedEmojis"].append(message)
+                custom.save_db(db)
+                await ctx.send(f'{message} has been forbidden')
+        elif message not in db["bannedWords"]:
+            db["bannedWords"].append(message)
+            custom.save_db(db)
+            await ctx.send(f'{[message]} has been forbidden')
+
 
     #@commands.Cog.listener()
     #async def on_message(self, message):

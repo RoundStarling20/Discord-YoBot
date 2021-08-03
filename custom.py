@@ -8,7 +8,6 @@ def isItme(ctx):
 
 def get_db():
     with open("cogs\database.json", "r") as file:
-        print('opened')
         return json.load(file)
 
 def save_db(db):
