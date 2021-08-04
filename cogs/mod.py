@@ -44,12 +44,7 @@ class TestCog(commands.Cog):
     @commands.check(custom.isItme)
     async def unforbid(self, ctx, *, message):
         db = custom.get_db()
-        if ':' in message:
-            if message in db["bannedEmojis"]:
-                db["bannedEmojis"].remove(message)
-                custom.save_db(db)
-                await ctx.message.add_reaction('<a:yes:820523959878418452>')
-        elif message in db["bannedWords"]:
+        if message in db["bannedWords"]:
             db["bannedWords"].remove(message)
             custom.save_db(db)
             await ctx.message.add_reaction('<a:yes:820523959878418452>')
@@ -58,14 +53,15 @@ class TestCog(commands.Cog):
     async def on_message(self, message):
         db = custom.get_db()
         for x in range(0, len(db["bannedWords"])):
-            if db["bannedWords"][x] in message.content.lower():
+            if (db["bannedWords"][x] in message.content.lower() and not(custom.isItKing(message.author.id))):
                 await message.add_reaction('<a:no:820524004594024459>')
                 break
 
     @commands.command()
+    @commands.check(custom.isItme)
     async def clear(self, ctx, amount = 5):
         await ctx.channel.purge(limit = amount + 1)
-        
+
 
 def setup(client):
     client.add_cog(TestCog(client))
