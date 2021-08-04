@@ -45,17 +45,38 @@ class TestCog(commands.Cog):
             if message not in db["bannedEmojis"]:
                 db["bannedEmojis"].append(message)
                 custom.save_db(db)
-                await ctx.send(f'{message} has been forbidden')
+                await ctx.send(f'{[message]} has been forbidden')
         elif message not in db["bannedWords"]:
             db["bannedWords"].append(message)
             custom.save_db(db)
             await ctx.send(f'{[message]} has been forbidden')
 
+    @commands.command()
+    @commands.check(custom.isItme)
+    async def unforbid(self, ctx, *, message):
+        db = custom.get_db()
+        if ':' in message:
+            if message in db["bannedEmojis"]:
+                db["bannedEmojis"].remove(message)
+                custom.save_db(db)
+                await ctx.send(f'{[message]} has been unforbidden')
+        elif message in db["bannedWords"]:
+            db["bannedWords"].remove(message)
+            custom.save_db(db)
+            await ctx.send(f'{[message]} has been unforbidden')
 
-    #@commands.Cog.listener()
-    #async def on_message(self, message):
-    #    if '<:uwugasm:850120112148316203>' in message.content:
-    #        await message.add_reaction('<a:no:820524004594024459>')
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        db = custom.get_db()
+    #    phraseSaid = message.content.lower().split()
+    #    for x in range(0, len(phraseSaid)):
+    #        if phraseSaid[x] in db["bannedEmojis"] + db["bannedWords"]:
+    #            await message.add_reaction('<a:no:820524004594024459>')
+    #            break
+        for x in range(0, len(db["bannedWords"])):
+            if db["bannedWords"][x] in message.content.lower():
+                await message.add_reaction('<a:no:820524004594024459>')
+                break
 
     @commands.command()
     async def clear(self, ctx, amount = 5):
