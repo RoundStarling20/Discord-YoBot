@@ -28,8 +28,8 @@ async def dabMeUp(ctx):
 
 @client.command()
 async def aight(ctx):
-    await ctx.send(file=discord.File('ight.jpg'))
-    await ctx.send(file=discord.File('Dab.png'))
+    await ctx.send(file=discord.File('Images\ight.jpg'))
+    await ctx.send(file=discord.File('Images\Dab.png'))
 
 @client.command()
 async def tu(ctx):
@@ -49,7 +49,7 @@ async def acco(ctx):
 
 @client.command()
 async def desp(ctx):
-    await ctx.send(file=discord.File('desp.png'))
+    await ctx.send(file=discord.File('Images\desp.png'))
 
 @client.command()
 async def rs(ctx):
@@ -60,7 +60,7 @@ async def rs(ctx):
 
 @client.command()
 async def hammie(ctx):
-    await ctx.send(file=discord.File('stinky.gif'))
+    await ctx.send(file=discord.File('Images\stinky.gif'))
 
 @client.command()
 async def stewart(ctx):
@@ -76,6 +76,10 @@ async def av(ctx, member: discord.Member = None):
     if member is None:
         member = ctx.author
     await ctx.send(member.avatar_url)
+
+@client.command()
+async def jail(ctx):
+    await ctx.send(file=discord.File('Images\jail.png'))
 
 
 for filename in os.listdir("./cogs"):
