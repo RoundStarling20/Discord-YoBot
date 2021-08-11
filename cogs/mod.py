@@ -4,11 +4,8 @@ from discord import message
 from discord.ext import commands
 import custom
 
-from PIL import Image
-import requests
-from io import BytesIO
 
-class TestCog(commands.Cog):
+class mod(commands.Cog):
     def __init__(self, client):
         self.client = client
 
@@ -67,19 +64,7 @@ class TestCog(commands.Cog):
     async def clear(self, ctx, amount = 5):
         await ctx.channel.purge(limit = amount + 1)
 
-    @commands.command()
-    @commands.check(custom.isItme)
-    async def steal(self, ctx, url: str, emojiName: str):
-        if (len(ctx.guild.emojis) == ctx.guild.emoji_limit):
-            await ctx.send("This server has than the max number of emojis")
-        else:
-            response = requests.get(url)
-            with open('cogs/tempFiles/temp.png', 'wb') as f:
-                f.write(response.content)
-            with open('cogs/tempFiles/temp.png', 'rb') as f:
-                await ctx.guild.create_custom_emoji(name=emojiName, image=f.read())
-            await ctx.message.add_reaction('<a:yes:820523959878418452>')
 
 
 def setup(client):
-    client.add_cog(TestCog(client))
+    client.add_cog(mod(client))
