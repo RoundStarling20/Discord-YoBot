@@ -67,7 +67,6 @@ class TestCog(commands.Cog):
     async def clear(self, ctx, amount = 5):
         await ctx.channel.purge(limit = amount + 1)
 
-
     @commands.command()
     @commands.check(custom.isItme)
     async def steal(self, ctx, url: str, emojiName: str):
@@ -78,28 +77,9 @@ class TestCog(commands.Cog):
             with open('cogs/tempFiles/temp.png', 'wb') as f:
                 f.write(response.content)
             with open('cogs/tempFiles/temp.png', 'rb') as f:
-                await ctx.guild.create_custom_emoji(name=emojiName, image=f.read())        
+                await ctx.guild.create_custom_emoji(name=emojiName, image=f.read())
+            await ctx.message.add_reaction('<a:yes:820523959878418452>')
 
-    #@commands.command()
-    #@commands.check(custom.isItme)
-    #async def steal(self, ctx, url: str, name: str):
-    #    response = requests.get(url)
-    #    img = Image.open(BytesIO(response.content))
-    #    with open('cogs/tempFiles/temp.png', 'wb') as f:
-    #        f.write(response.content)
-
-    #@commands.command()
-    #@commands.check(custom.isItme)
-    #async def steal(self, ctx, emojiName: str, *, newName):
-    #    emoji = discord.utils.get(ctx.author., name=emojiName)
-    #    emoji.save('cogs/tempFiles/temp.png')
-
-    #@commands.command()
-    #@commands.check(custom.isItme)
-    #async def steal(self, ctx, ID: discord.Emoji, *, emojiName):
-    #    await ID.url.save('cogs/tempFiles/temp.png')
-    #    await discord.guild.create_custom_emoji(name=emojiName, image=discord.File(fp='cogs/tempFiles/temp.png'))
-    #    print("created")
 
 def setup(client):
     client.add_cog(TestCog(client))
