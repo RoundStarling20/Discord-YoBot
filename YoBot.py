@@ -23,7 +23,7 @@ async def on_command_error(ctx, error):
 
 @client.command()
 async def dabMeUp(ctx):
-    await ctx.send(file=discord.File('Dab_me_up.png'))
+    await ctx.send(file=discord.File('Images\Dab_me_up.png'))
 
 @client.command()
 async def aight(ctx):
