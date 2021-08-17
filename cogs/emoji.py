@@ -2,8 +2,8 @@ import discord
 from discord import message
 from discord.ext import commands
 import custom
-
 import requests
+
 
 class emoji(commands.Cog):
     def __init__(self, client):
@@ -34,7 +34,6 @@ class emoji(commands.Cog):
         await emoji.edit(name=newName, reason=f'Renamed by {ctx.author}')
         await ctx.message.add_reaction('<a:yes:820523959878418452>')
             
-
 
 def setup(client):
     client.add_cog(emoji(client))

@@ -23,12 +23,12 @@ async def on_command_error(ctx, error):
 
 @client.command()
 async def dabMeUp(ctx):
-    await ctx.send(file=discord.File('Images\Dab_me_up.png'))
+    await ctx.send(file=discord.File('Images/Dab_me_up.png'))
 
 @client.command()
 async def aight(ctx):
-    await ctx.send(file=discord.File('Images\ight.jpg'))
-    await ctx.send(file=discord.File('Images\Dab.png'))
+    await ctx.send(file=discord.File('Images/ight.jpg'))
+    await ctx.send(file=discord.File('Images/Dab.png'))
 
 @client.command()
 async def tu(ctx):
@@ -48,7 +48,7 @@ async def acco(ctx):
 
 @client.command()
 async def desp(ctx):
-    await ctx.send(file=discord.File('Images\desp.png'))
+    await ctx.send(file=discord.File('Images/desp.png'))
 
 @client.command()
 async def rs(ctx):
@@ -59,16 +59,11 @@ async def rs(ctx):
 
 @client.command()
 async def hammie(ctx):
-    await ctx.send(file=discord.File('Images\stinky.gif'))
+    await ctx.send(file=discord.File('Images/stinky.gif'))
 
 @client.command()
 async def stewart(ctx):
     await ctx.send("That aint my name cuh")
-
-@client.command()
-async def commands(ctx):
-    rsBotCommands = "```.ping: returns the latency in ms\n.clear <n>: purges n messages```"
-    await ctx.send(content = rsBotCommands)
 
 @client.command()
 async def av(ctx, member: discord.Member = None):
@@ -78,8 +73,7 @@ async def av(ctx, member: discord.Member = None):
 
 @client.command()
 async def jail(ctx):
-    await ctx.send(file=discord.File('Images\jail.png'))
-
+    await ctx.send(file=discord.File('Images/jail.png'))
 
 for filename in os.listdir("./cogs"):
     if filename.endswith(".py"):

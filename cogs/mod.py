@@ -20,13 +20,13 @@ class mod(commands.Cog):
     @commands.check(custom.isItme)
     async def ban(self, ctx, user: discord.abc.User, *, reason = None):
             await ctx.guild.ban(user)
-            await ctx.send(f'Banned {user.name}#{user.discriminator} ')
+            await ctx.send(f'Banned {user.name}#{user.discriminator}')
 
     @commands.command()
     @commands.check(custom.isItme)
     async def unban(self, ctx, user: discord.abc.User):
         await ctx.guild.unban(user)
-        await ctx.send(f'Unbanned {user.name}#{user.discriminator} ')
+        await ctx.send(f'Unbanned {user.name}#{user.discriminator}')
                 
     @commands.command()
     @commands.check(custom.isItme)
@@ -63,7 +63,6 @@ class mod(commands.Cog):
     @commands.check(custom.isItme)
     async def clear(self, ctx, amount = 5):
         await ctx.channel.purge(limit = amount + 1)
-
 
 
 def setup(client):
