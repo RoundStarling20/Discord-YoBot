@@ -10,7 +10,7 @@ class emoji(commands.Cog):
         self.client = client
 
     @commands.command()
-    #@commands.check(custom.isItme)
+    @commands.has_permissions(manage_emojis=True)
     async def steal(self, ctx, url: str, emojiName: str):
         if (len(ctx.guild.emojis) == ctx.guild.emoji_limit):
             await ctx.send("This server has than the max number of emojis")
@@ -23,17 +23,17 @@ class emoji(commands.Cog):
             await ctx.message.add_reaction('<a:yes:820523959878418452>')
 
     @commands.command()
-    #@commands.check(custom.isItme)
+    @commands.has_permissions(manage_emojis=True)
     async def delete(self, ctx, emoji: discord.Emoji):
         await emoji.delete(reason=f'Deleted by {ctx.author}')
         await ctx.message.add_reaction('<a:yes:820523959878418452>')
 
     @commands.command()
-    #@commands.check(custom.isItme)
+    @commands.has_permissions(manage_emojis=True)
     async def update(self, ctx, emoji: discord.Emoji, *, newName):
         await emoji.edit(name=newName, reason=f'Renamed by {ctx.author}')
         await ctx.message.add_reaction('<a:yes:820523959878418452>')
-            
+
 
 def setup(client):
     client.add_cog(emoji(client))

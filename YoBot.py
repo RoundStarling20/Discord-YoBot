@@ -1,4 +1,5 @@
 import discord
+from discord import file
 from discord.ext import commands
 from discord.flags import Intents
 import random
@@ -6,11 +7,30 @@ import os
 import custom
 
 
-client = commands.Bot(command_prefix = '.', intents=Intents.all())
+client = commands.Bot(command_prefix = custom.getPrefix)
+
+@client.command()
+async def changePrefix(ctx, prefix):
+    prefixes = custom.get_db(filePath="cogs/Databases/prefixes.json")
+    prefixes[str(ctx.guild.id)] = prefix
+    custom.save_db(db=prefixes, filePath='cogs/Databases/prefixes.json')
+    await ctx.message.add_reaction('<a:yes:820523959878418452>')
+
+@client.event
+async def on_guild_join(guild):
+    prefixes = custom.get_db(filePath="cogs/Databases/prefixes.json")
+    prefixes[str(guild.id)] = '.'
+    custom.save_db(db=prefixes, filePath='cogs/Databases/prefixes.json')
+
+@client.event
+async def on_guild_remove(guild):
+    prefixes = custom.get_db(filePath="cogs/Databases/prefixes.json")
+    prefixes.pop(str(guild.id))
+    custom.save_db(db=prefixes, filePath='cogs/Databases/prefixes.json')
 
 @client.event
 async def on_member_join(member):
-    await member.guild.system_channel.send(file=discord.File('bababoey.gif'))
+    await member.guild.system_channel.send(file=discord.File('Images/bababoey.gif'))
     await member.guild.system_channel.send(f'Welcome <@{member.id}>!')
 
 @client.event
