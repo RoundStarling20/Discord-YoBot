@@ -13,7 +13,7 @@ class emoji(commands.Cog):
     @commands.has_permissions(manage_emojis=True)
     async def steal(self, ctx, url: str, emojiName: str):
         if (len(ctx.guild.emojis) == ctx.guild.emoji_limit):
-            await ctx.send("This server has than the max number of emojis")
+            await ctx.send("This server has the max number of emojis")
         else:
             response = requests.get(url)
             with open('cogs/tempFiles/temp.png', 'wb') as f:

@@ -41,6 +41,11 @@ class dev(commands.Cog):
         self.client.load_extension(f'cogs.{extension}')
         await ctx.send(f'[{extension}] has been unloaded and reloaded')
 
+    @commands.command()
+    @commands.check(custom.isItme)
+    async def dump(self, ctx, dbName):
+        await ctx.send(file=discord.File(f'cogs/Databases/{dbName}.json'))
+
 
 def setup(client):
     client.add_cog(dev(client))

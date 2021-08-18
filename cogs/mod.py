@@ -32,12 +32,7 @@ class mod(commands.Cog):
     @commands.check(custom.isItme)
     async def forbid(self, ctx, *, message):
         db = custom.get_db(filePath="cogs/Databases/database.json")
-        if ':' in message:
-            if message not in db["bannedEmojis"]:
-                db["bannedEmojis"].append(message)
-                custom.save_db(db, filePath="cogs/Databases/database.json")
-                await ctx.message.add_reaction('<a:yes:820523959878418452>')
-        elif message not in db["bannedWords"]:
+        if message not in db["bannedWords"]:
             db["bannedWords"].append(message)
             custom.save_db(db, filePath="cogs/Databases/database.json")
             await ctx.message.add_reaction('<a:yes:820523959878418452>')
@@ -65,6 +60,7 @@ class mod(commands.Cog):
         await ctx.channel.purge(limit = amount + 1)
 
     @commands.command()
+    @commands.has_permissions(administrator=True)
     async def changePrefix(self, ctx, prefix):
         prefixes = custom.get_db(filePath="cogs/Databases/prefixes.json")
         prefixes[str(ctx.guild.id)] = prefix
