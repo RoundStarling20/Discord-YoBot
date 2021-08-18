@@ -9,13 +9,6 @@ import custom
 
 client = commands.Bot(command_prefix = custom.getPrefix)
 
-@client.command()
-async def changePrefix(ctx, prefix):
-    prefixes = custom.get_db(filePath="cogs/Databases/prefixes.json")
-    prefixes[str(ctx.guild.id)] = prefix
-    custom.save_db(db=prefixes, filePath='cogs/Databases/prefixes.json')
-    await ctx.message.add_reaction('<a:yes:820523959878418452>')
-
 @client.event
 async def on_guild_join(guild):
     prefixes = custom.get_db(filePath="cogs/Databases/prefixes.json")

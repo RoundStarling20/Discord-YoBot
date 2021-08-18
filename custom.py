@@ -16,7 +16,7 @@ def get_db(filePath):
 
 def save_db(db, filePath):
     with open(filePath, "w") as file:
-        json.dump(db, file)
+        json.dump(db, file, indent=4)
 
 def getPrefix(client, message):
     prefixes = get_db(filePath="cogs/Databases/prefixes.json")

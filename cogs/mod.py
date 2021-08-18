@@ -63,6 +63,13 @@ class mod(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def clear(self, ctx, amount = 5):
         await ctx.channel.purge(limit = amount + 1)
+
+    @commands.command()
+    async def changePrefix(self, ctx, prefix):
+        prefixes = custom.get_db(filePath="cogs/Databases/prefixes.json")
+        prefixes[str(ctx.guild.id)] = prefix
+        custom.save_db(db=prefixes, filePath='cogs/Databases/prefixes.json')
+        await ctx.message.add_reaction('<a:yes:820523959878418452>')
     
 
 def setup(client):
