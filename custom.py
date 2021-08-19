@@ -1,7 +1,13 @@
-import discord
-from discord.ext import commands
 import json
 
+import discord
+from discord.ext import commands
+
+directoryPath = {
+  "badWordDB": "cogs/Databases/database.json",
+  "serverPrefixdb": "cogs/Databases/prefixes.json",
+  "tempPNG": "cogs/tempFiles/temp.png"
+}
 
 def isItme(ctx):
     return ctx.message.author.id == 220327217312432129
@@ -19,5 +25,5 @@ def save_db(db, filePath):
         json.dump(db, file, indent=4)
 
 def getPrefix(client, message):
-    prefixes = get_db(filePath="cogs/Databases/prefixes.json")
+    prefixes = get_db(filePath=directoryPath["serverPrefixdb"])
     return prefixes[str(message.guild.id)]

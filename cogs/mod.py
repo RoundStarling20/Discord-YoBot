@@ -1,8 +1,10 @@
 from os import name
+
+import custom
 import discord
+from custom import directoryPath
 from discord import message
 from discord.ext import commands
-import custom
 
 
 class mod(commands.Cog):
@@ -31,24 +33,24 @@ class mod(commands.Cog):
     @commands.command(aliases=['haram'])
     @commands.check(custom.isItme)
     async def forbid(self, ctx, *, message):
-        db = custom.get_db(filePath="cogs/Databases/database.json")
+        db = custom.get_db(filePath=directoryPath["badWordDB"])
         if message not in db["bannedWords"]:
             db["bannedWords"].append(message)
-            custom.save_db(db, filePath="cogs/Databases/database.json")
+            custom.save_db(db, filePath=directoryPath["badWordDB"])
             await ctx.message.add_reaction('<a:yes:820523959878418452>')
 
     @commands.command(aliases=['halal'])
     @commands.check(custom.isItme)
     async def unforbid(self, ctx, *, message):
-        db = custom.get_db(filePath="cogs/Databases/database.json")
+        db = custom.get_db(filePath=directoryPath["badWordDB"])
         if message in db["bannedWords"]:
             db["bannedWords"].remove(message)
-            custom.save_db(db, filePath="cogs/Databases/database.json")
+            custom.save_db(db, filePath=directoryPath["badWordDB"])
             await ctx.message.add_reaction('<a:yes:820523959878418452>')
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        db = custom.get_db(filePath="cogs/Databases/database.json")
+        db = custom.get_db(filePath=directoryPath["badWordDB"])
         for x in range(0, len(db["bannedWords"])):
             if (db["bannedWords"][x] in message.content.lower() and not(custom.isItKing(message.author.id))):
                 await message.add_reaction('<a:no:820524004594024459>')
@@ -62,11 +64,15 @@ class mod(commands.Cog):
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def changePrefix(self, ctx, prefix):
-        prefixes = custom.get_db(filePath="cogs/Databases/prefixes.json")
+        prefixes = custom.get_db(filePath=directoryPath["serverPrefixdb"])
         prefixes[str(ctx.guild.id)] = prefix
-        custom.save_db(db=prefixes, filePath='cogs/Databases/prefixes.json')
+        custom.save_db(db=prefixes, filePath=directoryPath["serverPrefixdb"])
         await ctx.message.add_reaction('<a:yes:820523959878418452>')
-    
+
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def dm(self, ctx, member: discord.Member, *, message):
+        await member.send(message)
 
 def setup(client):
     client.add_cog(mod(client))

@@ -1,25 +1,27 @@
+import os
+import random
+
 import discord
 from discord import file
 from discord.ext import commands
 from discord.flags import Intents
-import random
-import os
-import custom
 
+import custom
+from custom import directoryPath
 
 client = commands.Bot(command_prefix = custom.getPrefix)
 
 @client.event
 async def on_guild_join(guild):
-    prefixes = custom.get_db(filePath="cogs/Databases/prefixes.json")
+    prefixes = custom.get_db(filePath=directoryPath["serverPrefixdb"])
     prefixes[str(guild.id)] = '.'
-    custom.save_db(db=prefixes, filePath='cogs/Databases/prefixes.json')
+    custom.save_db(db=prefixes, filePath=directoryPath["serverPrefixdb"])
 
 @client.event
 async def on_guild_remove(guild):
-    prefixes = custom.get_db(filePath="cogs/Databases/prefixes.json")
+    prefixes = custom.get_db(filePath=directoryPath["serverPrefixdb"])
     prefixes.pop(str(guild.id))
-    custom.save_db(db=prefixes, filePath='cogs/Databases/prefixes.json')
+    custom.save_db(db=prefixes, filePath=directoryPath["serverPrefixdb"])
 
 @client.event
 async def on_member_join(member):
@@ -82,7 +84,12 @@ async def stewart(ctx):
 async def av(ctx, member: discord.Member = None):
     if member is None:
         member = ctx.author
-    await ctx.send(member.avatar_url)
+    embed = discord.Embed(
+        title = f'{member.name}',
+        url = f'{member.avatar_url}'
+    )
+    embed.set_image(url=member.avatar_url)
+    await ctx.send(embed=embed)
 
 @client.command()
 async def jail(ctx):
