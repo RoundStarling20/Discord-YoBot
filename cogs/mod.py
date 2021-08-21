@@ -1,5 +1,3 @@
-from os import name
-
 import custom
 import discord
 from custom import directoryPath

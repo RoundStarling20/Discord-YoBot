@@ -1,4 +1,3 @@
-import custom
 import discord
 import requests
 from custom import directoryPath
