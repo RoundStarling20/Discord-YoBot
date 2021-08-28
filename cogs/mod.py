@@ -27,7 +27,7 @@ class mod(commands.Cog):
     async def unban(self, ctx, user: discord.abc.User):
         await ctx.guild.unban(user)
         await ctx.send(f'Unbanned {user.name}#{user.discriminator}')
-                
+
     @commands.command(aliases=['haram'])
     @commands.check(custom.isItme)
     async def forbid(self, ctx, *, message):
@@ -68,7 +68,6 @@ class mod(commands.Cog):
         await ctx.message.add_reaction('<a:yes:820523959878418452>')
 
     @commands.command()
-    @commands.has_permissions(manage_messages=True)
     async def dm(self, ctx, member: discord.Member, *, message):
         await member.send(message)
 

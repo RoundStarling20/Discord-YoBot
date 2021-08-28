@@ -62,6 +62,11 @@ class fun(commands.Cog):
             pickUpLines = fp.read().split("\n")
         await ctx.send(pickUpLines[random.randint(0, len(pickUpLines))])
 
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if message.content.lower() == "fr" and not(message.author.id == 870467770846945290):
+            await message.channel.send("fr")
+
 
 def setup(client):
     client.add_cog(fun(client))
