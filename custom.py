@@ -9,6 +9,11 @@ directoryPath = {
   "tempPNG": "cogs/tempFiles/temp.png"
 }
 
+emojiList = {
+    "confirmed": "<a:confirmed:881422225134223372>",
+    "failed": "<a:failed:881422274467598366>"
+}
+
 def isItme(ctx):
     return ctx.message.author.id == 220327217312432129
 

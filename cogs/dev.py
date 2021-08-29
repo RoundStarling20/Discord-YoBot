@@ -1,5 +1,7 @@
 import custom
 import discord
+import json
+from custom import emojiList
 from discord.ext import commands
 
 
@@ -45,6 +47,14 @@ class dev(commands.Cog):
     @commands.check(custom.isItme)
     async def dump(self, ctx, dbName):
         await ctx.send(file=discord.File(f'cogs/Databases/{dbName}.json'))
+
+    @commands.command()
+    @commands.check(custom.isItme)
+    async def listEmojis(self, ctx):
+        formatted = json.dumps(emojiList, indent=4)
+        embed = discord.Embed()
+        embed.add_field(name="List of Emojis Used by the Bot", value=f'{formatted}', inline=True)
+        await ctx.send(embed=embed)
 
 
 def setup(client):

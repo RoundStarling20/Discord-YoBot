@@ -1,6 +1,7 @@
 import custom
 import discord
 from custom import directoryPath
+from custom import emojiList
 from discord import message
 from discord.ext import commands
 
@@ -35,7 +36,7 @@ class mod(commands.Cog):
         if message not in db["bannedWords"]:
             db["bannedWords"].append(message)
             custom.save_db(db, filePath=directoryPath["badWordDB"])
-            await ctx.message.add_reaction('<a:yes:820523959878418452>')
+            await ctx.message.add_reaction(emojiList["confirmed"])
 
     @commands.command(aliases=['halal'])
     @commands.check(custom.isItme)
@@ -44,14 +45,14 @@ class mod(commands.Cog):
         if message in db["bannedWords"]:
             db["bannedWords"].remove(message)
             custom.save_db(db, filePath=directoryPath["badWordDB"])
-            await ctx.message.add_reaction('<a:yes:820523959878418452>')
+            await ctx.message.add_reaction(emojiList["confirmed"])
 
     @commands.Cog.listener()
     async def on_message(self, message):
         db = custom.get_db(filePath=directoryPath["badWordDB"])
         for x in range(0, len(db["bannedWords"])):
             if (db["bannedWords"][x] in message.content.lower() and not(custom.isItKing(message.author.id))):
-                await message.add_reaction('<a:no:820524004594024459>')
+                await message.add_reaction(emojiList["failed"])
                 break
 
     @commands.command()
@@ -65,7 +66,7 @@ class mod(commands.Cog):
         prefixes = custom.get_db(filePath=directoryPath["serverPrefixdb"])
         prefixes[str(ctx.guild.id)] = prefix
         custom.save_db(db=prefixes, filePath=directoryPath["serverPrefixdb"])
-        await ctx.message.add_reaction('<a:yes:820523959878418452>')
+        await ctx.message.add_reaction(emojiList["confirmed"])
 
     @commands.command()
     async def dm(self, ctx, member: discord.Member, *, message):

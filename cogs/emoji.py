@@ -1,6 +1,7 @@
 import discord
 import requests
 from custom import directoryPath
+from custom import emojiList
 from discord import message
 from discord.ext import commands
 
@@ -20,19 +21,19 @@ class emoji(commands.Cog):
                 f.write(response.content)
             with open(directoryPath["tempPNG"], 'rb') as f:
                 await ctx.guild.create_custom_emoji(name=emojiName, image=f.read(), reason=f'Created by {ctx.author}')
-            await ctx.message.add_reaction('<a:yes:820523959878418452>')
+            await ctx.message.add_reaction(emojiList["confirmed"])
 
     @commands.command()
     @commands.has_permissions(manage_emojis=True)
     async def delete(self, ctx, emoji: discord.Emoji):
         await emoji.delete(reason=f'Deleted by {ctx.author}')
-        await ctx.message.add_reaction('<a:yes:820523959878418452>')
+        await ctx.message.add_reaction(emojiList["confirmed"])
 
     @commands.command()
     @commands.has_permissions(manage_emojis=True)
     async def update(self, ctx, emoji: discord.Emoji, *, newName):
         await emoji.edit(name=newName, reason=f'Renamed by {ctx.author}')
-        await ctx.message.add_reaction('<a:yes:820523959878418452>')
+        await ctx.message.add_reaction(emojiList["confirmed"])
 
 
 def setup(client):
