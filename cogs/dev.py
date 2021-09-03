@@ -17,14 +17,6 @@ class dev(commands.Cog):
     async def on_ready(self):
         print("Bot is ready!")
 
-    @commands.Cog.listener()
-    async def on_member_join(self, member):   
-        print(f"{member} has joined [{member.guild.name}: {member.guild.id}].")
-
-    @commands.Cog.listener()
-    async def on_member_remove(self, member):
-        print(f"{member} has left [{member.guild.name}: {member.guild.id}].")
-
     @commands.command()
     async def ping(self, ctx):
         await ctx.send(f'Pong! {round(self.client.latency * 1000)}ms')

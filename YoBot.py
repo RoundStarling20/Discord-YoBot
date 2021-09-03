@@ -8,7 +8,7 @@ from discord.flags import Intents
 import custom
 from custom import directoryPath
 
-client = commands.Bot(command_prefix = custom.getPrefix)
+client = commands.Bot(command_prefix = custom.getPrefix, intents=Intents.all())
 
 @client.event
 async def on_guild_join(guild):
@@ -24,8 +24,12 @@ async def on_guild_remove(guild):
 
 @client.event
 async def on_member_join(member):
-    await member.guild.system_channel.send(file=discord.File('Images/bababoey.gif'))
+    await member.guild.system_channel.send(file=discord.File('cogs/Images/bababoey.gif'))
     await member.guild.system_channel.send(f'Welcome <@{member.id}>!')
+
+@client.event
+async def on_member_remove(member):
+    await member.guild.system_channel.send(f'Goodbye DooDoo Head <@{member.id}>!')
 
 @client.event
 async def on_command_error(ctx, error):
