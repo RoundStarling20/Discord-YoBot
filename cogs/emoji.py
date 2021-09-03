@@ -13,15 +13,12 @@ class emoji(commands.Cog):
     @commands.command()
     @commands.has_permissions(manage_emojis=True)
     async def steal(self, ctx, url: str, emojiName: str):
-        if (len(ctx.guild.emojis) == ctx.guild.emoji_limit):
-            await ctx.send("This server has the max number of emojis")
-        else:
-            response = requests.get(url)
-            with open(directoryPath["tempPNG"], 'wb') as f:
-                f.write(response.content)
-            with open(directoryPath["tempPNG"], 'rb') as f:
-                await ctx.guild.create_custom_emoji(name=emojiName, image=f.read(), reason=f'Created by {ctx.author}')
-            await ctx.message.add_reaction(emojiList["confirmed"])
+        response = requests.get(url)
+        with open(directoryPath["tempPNG"], 'wb') as f:
+            f.write(response.content)
+        with open(directoryPath["tempPNG"], 'rb') as f:
+            await ctx.guild.create_custom_emoji(name=emojiName, image=f.read(), reason=f'Created by {ctx.author}')
+        await ctx.message.add_reaction(emojiList["confirmed"])
 
     @commands.command()
     @commands.has_permissions(manage_emojis=True)
@@ -34,6 +31,28 @@ class emoji(commands.Cog):
     async def update(self, ctx, emoji: discord.Emoji, *, newName):
         await emoji.edit(name=newName, reason=f'Renamed by {ctx.author}')
         await ctx.message.add_reaction(emojiList["confirmed"])
+
+    @commands.command()
+    async def listEmojiCount(self, ctx):
+        animated = 0
+        nonAnimated = 0
+        for i in range(len(ctx.guild.emojis)):
+            if ctx.guild.emojis[i].animated == 1:
+                animated += 1
+
+        for i in range(len(ctx.guild.emojis)):
+            if ctx.guild.emojis[i].animated == 0:
+                nonAnimated += 1
+    
+        if (animated == ctx.guild.emoji_limit):
+            await ctx.send("This server has no animated emoji slots open")
+            await ctx.send(f"There are {ctx.guild.emoji_limit - nonAnimated} static emoji slots open")
+        elif (nonAnimated == ctx.guild.emoji_limit):
+            await ctx.send("This server has no static emoji slots open")
+            await ctx.send(f"There are {ctx.guild.emoji_limit - animated} animated emoji slots open")
+        else:
+            await ctx.send(f"There are {ctx.guild.emoji_limit - nonAnimated} static emoji slots open")
+            await ctx.send(f"There are {ctx.guild.emoji_limit - animated} animated emoji slots open")
 
 
 def setup(client):
