@@ -6,11 +6,11 @@ from discord import message
 from discord.ext import commands
 
 
-class emoji(commands.Cog):
+class emoji(commands.Cog, name="Emojis", description="A set of commands to help manage server emojis"):
     def __init__(self, client):
         self.client = client
 
-    @commands.command()
+    @commands.command(help= "steals an emoji if given a link")
     @commands.has_permissions(manage_emojis=True)
     async def steal(self, ctx, url: str, emojiName: str):
         response = requests.get(url)
@@ -20,19 +20,19 @@ class emoji(commands.Cog):
             await ctx.guild.create_custom_emoji(name=emojiName, image=f.read(), reason=f'Created by {ctx.author}')
         await ctx.message.add_reaction(emojiList["confirmed"])
 
-    @commands.command()
+    @commands.command(help= "delete an emoji")
     @commands.has_permissions(manage_emojis=True)
     async def delete(self, ctx, emoji: discord.Emoji):
         await emoji.delete(reason=f'Deleted by {ctx.author}')
         await ctx.message.add_reaction(emojiList["confirmed"])
 
-    @commands.command()
+    @commands.command(help= "alow the changing of an emojis name")
     @commands.has_permissions(manage_emojis=True)
     async def update(self, ctx, emoji: discord.Emoji, *, newName):
         await emoji.edit(name=newName, reason=f'Renamed by {ctx.author}')
         await ctx.message.add_reaction(emojiList["confirmed"])
 
-    @commands.command()
+    @commands.command(help= "lists the number of emojis slots being used")
     async def listEmojiCount(self, ctx):
         animated = 0
         nonAnimated = 0

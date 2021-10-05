@@ -1,11 +1,10 @@
 import random
 
 import discord
-from discord import client
 from discord.ext import commands
 
 
-class fun(commands.Cog):
+class fun(commands.Cog, name="Fun Commands", description="A set of commands to enjoy"):
     def __init__(self, client):
         self.client = client
 
@@ -42,14 +41,14 @@ class fun(commands.Cog):
     async def desp(self, ctx):
         await ctx.send(file=discord.File('cogs/Images/desp.png'))
 
-    @commands.command()
+    @commands.command(help= "shows RoundStarling20 how you really feel")
     async def rs(self, ctx):
         message = random.choice(["RoundStarling20 is so cool", "RoundStarling20 is so smart", "RoundStarling20 is the best programmer ever", "RoundStarling20 is so bad <:SHEESH:870453487899652106>", "RoundStarling20 is cute fr fr <:blushflush:833362636640878673>"])
         webhook = await ctx.channel.create_webhook(name="RSHook" , reason="For RS's bot")
         await webhook.send(content = message, username = ctx.author.display_name, avatar_url = ctx.author.avatar_url)
         await webhook.delete()
 
-    @commands.command()
+    @commands.command(help= "stinky")
     async def hammie(self, ctx):
         await ctx.send(file=discord.File('cogs/Images/stinky.gif'))
 
@@ -57,7 +56,7 @@ class fun(commands.Cog):
     async def stewart(self, ctx):
         await ctx.send("That aint my name cuh")
 
-    @commands.command()
+    @commands.command(help= "prints out a pickupline")
     async def pickupLine(self, ctx):
         with open("cogs/Databases/pickUpLines.txt") as fp:
             pickUpLines = fp.read().split("\n")

@@ -5,7 +5,7 @@ from custom import emojiList
 from discord.ext import commands
 
 
-class dev(commands.Cog):
+class dev(commands.Cog, name="Developer Tools", description="A set of tools used for my development"):
     def __init__(self, client):
         self.client = client
 
@@ -17,7 +17,7 @@ class dev(commands.Cog):
     async def on_ready(self):
         print("Bot is ready!")
 
-    @commands.command()
+    @commands.command(help= "checks the ping of the bot")
     async def ping(self, ctx):
         await ctx.send(f'Pong! {round(self.client.latency * 1000)}ms')
 
@@ -28,7 +28,7 @@ class dev(commands.Cog):
         else:
             print(f"{message.author} said {message.content}")
 
-    @commands.command()
+    @commands.command(help= "unloads and loads different cogs to keep the bot up during development")
     @commands.check(custom.isItme)
     async def reload(self, ctx, extension):
         self.client.unload_extension(f'cogs.{extension}')
@@ -40,7 +40,7 @@ class dev(commands.Cog):
     async def dump(self, ctx, dbName):
         await ctx.send(file=discord.File(f'cogs/Databases/{dbName}.json'))
 
-    @commands.command()
+    @commands.command(help= "lists the emojis used by the bot")
     @commands.check(custom.isItme)
     async def listEmojis(self, ctx):
         formatted = json.dumps(emojiList, indent=4)
