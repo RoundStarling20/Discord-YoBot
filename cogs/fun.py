@@ -1,6 +1,7 @@
 import random
 
 import discord
+from discord import client
 from discord.ext import commands
 
 
@@ -66,6 +67,11 @@ class fun(commands.Cog):
     async def on_message(self, message):
         if message.content.lower() == "fr" and not(message.author.id == 870467770846945290):
             await message.channel.send("fr")
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if 870467770846945290 in [user.id for user in message.mentions]:
+            await message.channel.send("WHY OYU PNIG")
 
 
 def setup(client):
